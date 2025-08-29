@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.request.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -7,16 +7,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -24,26 +25,19 @@ import ru.practicum.shareit.user.model.User;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Entity
-@Table(name = "items")
-public class Item {
+@Table(name = "requests")
+public class ItemRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "name", nullable = false)
-    String name;
-
     @Column(name = "description", nullable = false)
     String description;
 
-    @Column(name = "is_available", nullable = false)
-    Boolean available;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    User owner;
+    @JoinColumn(name = "requester_id", nullable = false)
+    User requestor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id", nullable = false)
-    ItemRequest review;
+    @Column(name = "created", nullable = false)
+    LocalDateTime created;
 }
