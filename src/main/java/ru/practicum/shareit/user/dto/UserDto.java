@@ -14,7 +14,8 @@ import ru.practicum.shareit.validation.Update;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
+public class
+UserDto {
     Long id;
     @NotBlank(groups = {Create.class})
     String name;

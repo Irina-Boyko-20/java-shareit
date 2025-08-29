@@ -13,7 +13,6 @@ import ru.practicum.shareit.validation.Create;
 public class ItemRequestDto {
     Long id;
 
-    @NotNull(groups = {Create.class})
     @NotBlank(groups = {Create.class})
     private String description;
 }

@@ -16,11 +16,9 @@ import ru.practicum.shareit.validation.Create;
 public class ItemDto {
     Long id;
 
-    @NotNull(groups = {Create.class})
     @NotBlank(groups = {Create.class})
     String name;
 
-    @NotNull(groups = {Create.class})
     @NotBlank(groups = {Create.class})
     String description;
 

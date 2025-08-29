@@ -25,17 +25,18 @@ import java.util.List;
 @RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
+    private static final String USER_ID_HEADER = "X-Sharer-User -Id";
     private final ItemService itemService;
 
     @PostMapping
     public ResponseEntity<ItemResponseDto> createItem(@Validated({Create.class})
-                                                      @RequestHeader("X-Sharer-User-Id") Long ownerId,
+                                                      @RequestHeader(USER_ID_HEADER) Long ownerId,
                                                       @Validated({Create.class}) @RequestBody ItemDto itemDto) {
         return new ResponseEntity<>(itemService.createItem(ownerId, itemDto), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{itemId}")
-    public ResponseEntity<ItemResponseDto> updateItem(@RequestHeader("X-Sharer-User-Id") Long ownerId,
+    public ResponseEntity<ItemResponseDto> updateItem(@RequestHeader(USER_ID_HEADER) Long ownerId,
                                                       @PathVariable Long itemId,
                                                       @RequestBody ItemDto itemDto) {
         return ResponseEntity.ok(itemService.updateItem(ownerId, itemId, itemDto));
@@ -47,7 +48,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemResponseDto>> getAllItems(@RequestHeader("X-Sharer-User-Id") Long ownerId) {
+    public ResponseEntity<List<ItemResponseDto>> getAllItems(@RequestHeader(USER_ID_HEADER) Long ownerId) {
         return ResponseEntity.ok(itemService.findAllItems(ownerId));
     }
 
