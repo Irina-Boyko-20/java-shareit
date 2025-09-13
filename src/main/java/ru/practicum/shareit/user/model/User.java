@@ -13,6 +13,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Сущность пользователя.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,13 +24,24 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "users")
 public class User {
+
+    /**
+     * Идентификатор пользователя.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     Long id;
 
+    /**
+     * Имя пользователя.
+     */
     @Column(name = "name", nullable = false)
     String name;
 
+    /**
+     * Электронная почта пользователя.
+     */
     @Column(name = "email", nullable = false, unique = true)
     String email;
 }
