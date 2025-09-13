@@ -36,7 +36,7 @@ public class BookingController {
     /**
      * Название заголовка для передачи ID пользователя.
      */
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String user_id_header = "X-Sharer-User-Id";
 
     /**
      * Сервис для работы с бронированиями.
@@ -52,7 +52,7 @@ public class BookingController {
      */
     @PostMapping
     public ResponseEntity<BookingResponseDto> createBooking(
-            @RequestHeader(USER_ID_HEADER) Long bookerId,
+            @RequestHeader(user_id_header) Long bookerId,
             @Validated({Create.class}) @RequestBody BookingDto bookingDto
     ) {
         return new ResponseEntity<>(bookingService.create(bookerId, bookingDto), HttpStatus.CREATED);
@@ -67,7 +67,7 @@ public class BookingController {
      * @return Ответ с обновленным бронированием и статусом 200 (OK).
      */
     @PatchMapping("/{bookingId}")
-    public ResponseEntity<BookingResponseDto> approveBooking(@RequestHeader(USER_ID_HEADER) Long userId,
+    public ResponseEntity<BookingResponseDto> approveBooking(@RequestHeader(user_id_header) Long userId,
                                                              @PathVariable Long bookingId,
                                                              @RequestParam boolean approved) {
         return new ResponseEntity<>(bookingService.approve(userId, bookingId, approved), HttpStatus.OK);
@@ -81,7 +81,7 @@ public class BookingController {
      * @return Ответ с данными бронирования и статусом 200 (OK).
      */
     @GetMapping("/{bookingId}")
-    public ResponseEntity<BookingResponseDto> getBookingByBooker(@RequestHeader(USER_ID_HEADER) Long bookerId,
+    public ResponseEntity<BookingResponseDto> getBookingByBooker(@RequestHeader(user_id_header) Long bookerId,
                                                                  @PathVariable Long bookingId) {
         return ResponseEntity.ok(bookingService.getBookingByBooker(bookerId, bookingId));
     }
@@ -95,7 +95,7 @@ public class BookingController {
      */
     @GetMapping("/owner")
     public ResponseEntity<List<BookingResponseDto>> getBookingByOwner(
-            @RequestHeader(USER_ID_HEADER) Long ownerId,
+            @RequestHeader(user_id_header) Long ownerId,
             @RequestParam(defaultValue = "ALL", required = false) String state) {
         return ResponseEntity.ok(bookingService.getBookingByOwner(ownerId, state));
     }
@@ -109,7 +109,7 @@ public class BookingController {
      */
     @GetMapping
     public ResponseEntity<List<BookingResponseDto>> getAllBookingUserById(
-            @RequestHeader(USER_ID_HEADER) Long userId,
+            @RequestHeader(user_id_header) Long userId,
             @RequestParam(defaultValue = "ALL", required = false) String state) {
         return ResponseEntity.ok(bookingService.getAllBookingUserById(userId, state));
     }
