@@ -38,6 +38,9 @@ public interface ItemMapper {
      * @param itemDto DTO предмета.
      * @return Сущность Item.
      */
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "request", ignore = true)
+    @Mapping(target = "comments", ignore = true)
     Item toItem(ItemDto itemDto);
 
     /**
@@ -63,6 +66,7 @@ public interface ItemMapper {
      * @return DTO ItemDetailedResponseDto.
      */
     @Mapping(target = "id", source = "item.id")
+    @Mapping(target = "requestId", source = "item.request.id")
     ItemDetailedResponseDto toDetailedResponseDto(Item item, Booking lastBooking, Booking nextBooking);
 
     /**

@@ -25,6 +25,7 @@ public interface CommentMapper {
      * @return Сущность Comment (ID игнорируется).
      */
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "created", ignore = true)
     Comment toComment(Item item, String authorName, String text);
 
     /**

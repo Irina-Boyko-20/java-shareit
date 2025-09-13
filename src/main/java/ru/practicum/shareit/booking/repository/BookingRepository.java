@@ -37,7 +37,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAllByBookerIdAndStartIsBeforeAndEndIsAfter(Long userId,
                                                                  LocalDateTime start,
                                                                  LocalDateTime end,
-                                                                 Sort SORT);
+                                                                 Sort sort);
 
     /**
      * Находит будущие бронирования пользователя.
@@ -47,17 +47,17 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
      * @param SORT   сортировка.
      * @return список бронирований.
      */
-    List<Booking> findAllByBookerIdAndStartIsAfter(Long userId, LocalDateTime start, Sort SORT);
+    List<Booking> findAllByBookerIdAndStartIsAfter(Long userId, LocalDateTime start, Sort sort);
 
     /**
      * Находит прошедшие бронирования пользователя.
      *
      * @param userId идентификатор пользователя.
      * @param end    дата окончания.
-     * @param SORT   сортировка.
+     * @param sort   сортировка.
      * @return список бронирований.
      */
-    List<Booking> findAllByBookerIdAndEndIsBefore(Long userId, LocalDateTime end, Sort SORT);
+    List<Booking> findAllByBookerIdAndEndIsBefore(Long userId, LocalDateTime end, Sort sort);
 
     /**
      * Находит бронирования пользователя по статусу.
