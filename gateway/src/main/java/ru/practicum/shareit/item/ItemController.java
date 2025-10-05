@@ -24,7 +24,7 @@ import ru.practicum.shareit.validation.Create;
 @Slf4j
 @Validated
 public class ItemController {
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String userIdHeader = "X-Sharer-User-Id";
     private final ItemClient itemClient;
 
     /**
@@ -35,7 +35,7 @@ public class ItemController {
      * @return {@link ResponseEntity} с результатом создания предмета
      */
     @PostMapping
-    public ResponseEntity<Object> createItem(@RequestHeader(USER_ID_HEADER) Long ownerId,
+    public ResponseEntity<Object> createItem(@RequestHeader(userIdHeader) Long ownerId,
                                              @Validated({Create.class}) @RequestBody ItemDto request) {
         log.info("Gateway: create item ownerId={}, request={}", ownerId, request);
         return itemClient.create(ownerId, request);
@@ -50,7 +50,7 @@ public class ItemController {
      * @return {@link ResponseEntity} с результатом обновления предмета
      */
     @PatchMapping("/{itemId}")
-    public ResponseEntity<Object> updateItem(@RequestHeader(USER_ID_HEADER) Long ownerId,
+    public ResponseEntity<Object> updateItem(@RequestHeader(userIdHeader) Long ownerId,
                                              @PathVariable Long itemId,
                                              @RequestBody ItemUpdateDto request) {
         log.info("Gateway: update item itemId={}, ownerId={}, request={}", itemId, ownerId, request);
@@ -66,7 +66,7 @@ public class ItemController {
      */
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getById(@PathVariable Long itemId,
-                                          @RequestHeader(USER_ID_HEADER) Long bookerId) {
+                                          @RequestHeader(userIdHeader) Long bookerId) {
         log.info("Gateway: get item itemId={}, bookerId={}", itemId, bookerId);
         return itemClient.getById(itemId, bookerId);
     }
@@ -78,7 +78,7 @@ public class ItemController {
      * @return {@link ResponseEntity} со списком предметов владельца
      */
     @GetMapping
-    public ResponseEntity<Object> getItemsByOwner(@RequestHeader(USER_ID_HEADER) Long ownerId) {
+    public ResponseEntity<Object> getItemsByOwner(@RequestHeader(userIdHeader) Long ownerId) {
         log.info("Gateway: get item owner ownerId={}", ownerId);
         return itemClient.getItemsByOwner(ownerId);
     }
@@ -117,7 +117,7 @@ public class ItemController {
      */
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> addComment(
-            @RequestHeader(USER_ID_HEADER) Long authorId,
+            @RequestHeader(userIdHeader) Long authorId,
             @PathVariable Long itemId,
             @Validated({Create.class}) @RequestBody CommentDto comment
     ) {

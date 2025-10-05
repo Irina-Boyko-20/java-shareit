@@ -36,7 +36,7 @@ import java.util.List;
 public class ItemController {
 
     /** Заголовок для передачи ID пользователя. */
-    private static final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private static final String userIdHeader = "X-Sharer-User-Id";
 
     /** Сервис для работы с предметами. */
     private final ItemService itemService;
@@ -49,7 +49,7 @@ public class ItemController {
      * @return ResponseEntity с созданным предметом и статусом 201 Created.
      */
     @PostMapping
-    public ResponseEntity<ItemResponseDto> createItem(@RequestHeader(USER_ID_HEADER) Long ownerId,
+    public ResponseEntity<ItemResponseDto> createItem(@RequestHeader(userIdHeader) Long ownerId,
                                                       @RequestBody ItemDto itemDto) {
         return new ResponseEntity<>(itemService.create(ownerId, itemDto), HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class ItemController {
      * @return ResponseEntity с обновленным предметом и статусом 200 OK.
      */
     @PatchMapping("/{itemId}")
-    public ResponseEntity<ItemResponseDto> updateItem(@RequestHeader(USER_ID_HEADER) Long ownerId,
+    public ResponseEntity<ItemResponseDto> updateItem(@RequestHeader(userIdHeader) Long ownerId,
                                                       @PathVariable Long itemId,
                                                       @RequestBody ItemUpdateRequestDto itemUpdateRequestDto) {
         return ResponseEntity.ok(itemService.update(ownerId, itemId, itemUpdateRequestDto));
@@ -78,7 +78,7 @@ public class ItemController {
      */
     @GetMapping("/{itemId}")
     public ResponseEntity<ItemDetailedResponseDto> getById(@PathVariable Long itemId,
-                                                           @RequestHeader(USER_ID_HEADER) Long bookerId) {
+                                                           @RequestHeader(userIdHeader) Long bookerId) {
         return ResponseEntity.ok(itemService.getById(itemId, bookerId));
     }
 
@@ -89,7 +89,7 @@ public class ItemController {
      * @return ResponseEntity со списком предметов и статусом 200 OK.
      */
     @GetMapping
-    public ResponseEntity<List<ItemResponseDto>> getAllItemsOwner(@RequestHeader(USER_ID_HEADER) Long ownerId) {
+    public ResponseEntity<List<ItemResponseDto>> getAllItemsOwner(@RequestHeader(userIdHeader) Long ownerId) {
         return ResponseEntity.ok(itemService.getAllItemsOwner(ownerId));
     }
 
@@ -124,7 +124,7 @@ public class ItemController {
      */
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<CommentResponseDto> addComment(
-            @RequestHeader(USER_ID_HEADER) Long authorId,
+            @RequestHeader(userIdHeader) Long authorId,
             @PathVariable Long itemId,
             @RequestBody CommentDto commentDto
     ) {

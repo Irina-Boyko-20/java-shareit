@@ -27,11 +27,12 @@ import ru.practicum.shareit.validation.Create;
  */
 @RestController
 @RequestMapping(path = "/bookings")
+
 @RequiredArgsConstructor
 @Slf4j
 @Validated
 public class BookingController {
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String userIdHeader = "X-Sharer-User-Id";
     private final BookingClient bookingClient;
 
     /**
@@ -42,7 +43,7 @@ public class BookingController {
      * @return ответ с результатом создания бронирования
      */
     @PostMapping
-    public ResponseEntity<Object> createBooking(@RequestHeader(USER_ID_HEADER) long bookerId,
+    public ResponseEntity<Object> createBooking(@RequestHeader(userIdHeader) long bookerId,
                                                 @Validated({Create.class}) @RequestBody BookingDto request) {
         log.info("Gateway: create booking userId={}, request={}", bookerId, request);
         return bookingClient.create(bookerId, request);
@@ -57,7 +58,7 @@ public class BookingController {
      * @return ответ с результатом операции подтверждения
      */
     @PatchMapping("/{bookingId}")
-    public ResponseEntity<Object> approveBooking(@RequestHeader(USER_ID_HEADER) Long userId,
+    public ResponseEntity<Object> approveBooking(@RequestHeader(userIdHeader) Long userId,
                                                  @PathVariable Long bookingId,
                                                  @RequestParam boolean approved) {
         log.info("Gateway: approve booking bookingId={}, userId={}, approved={}", bookingId, userId, approved);
@@ -72,7 +73,7 @@ public class BookingController {
      * @return ответ с информацией о бронировании
      */
     @GetMapping("/{bookingId}")
-    public ResponseEntity<Object> getBookingByBooker(@RequestHeader(USER_ID_HEADER) Long bookerId,
+    public ResponseEntity<Object> getBookingByBooker(@RequestHeader(userIdHeader) Long bookerId,
                                                      @PathVariable Long bookingId) {
         log.info("Gateway: get booking bookingId={}, bookerId={}", bookingId, bookerId);
         return bookingClient.getByBooker(bookerId, bookingId);
@@ -88,7 +89,7 @@ public class BookingController {
      */
     @GetMapping("/owner")
     public ResponseEntity<Object> getBookingByOwner(
-            @RequestHeader(USER_ID_HEADER) Long ownerId,
+            @RequestHeader(userIdHeader) Long ownerId,
             @RequestParam(defaultValue = "ALL", required = false) String state) {
         BookingState stateParam = BookingState.from(state)
                 .orElseThrow(() -> new IllegalArgumentException("Unknown state - %s ".formatted(state)));
@@ -106,7 +107,7 @@ public class BookingController {
      */
     @GetMapping
     public ResponseEntity<Object> getAllBooking(
-            @RequestHeader(USER_ID_HEADER) Long userId,
+            @RequestHeader(userIdHeader) Long userId,
             @RequestParam(defaultValue = "ALL", required = false) String state
     ) {
         BookingState stateParam = BookingState.from(state)

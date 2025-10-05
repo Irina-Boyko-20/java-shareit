@@ -27,7 +27,7 @@ import java.util.List;
 public class ItemRequestController {
 
     /** Заголовок для передачи ID пользователя. */
-    private static final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private static final String userIdHeader = "X-Sharer-User-Id";
 
     private final ItemRequestService itemRequestService;
 
@@ -40,7 +40,7 @@ public class ItemRequestController {
      */
     @PostMapping
     public ResponseEntity<ItemRequestDto> addRequest(
-            @RequestHeader(USER_ID_HEADER) Long requestorId,
+            @RequestHeader(userIdHeader) Long requestorId,
             @RequestBody ItemRequestDto itemRequestDto) {
         return new ResponseEntity<>(itemRequestService.addRequest(requestorId, itemRequestDto), HttpStatus.CREATED);
     }
@@ -53,7 +53,7 @@ public class ItemRequestController {
      */
     @GetMapping
     public ResponseEntity<List<ItemRequestDetailsDto>> getByRequestorId(
-            @RequestHeader(USER_ID_HEADER) Long requestorId
+            @RequestHeader(userIdHeader) Long requestorId
     ) {
         return ResponseEntity.ok(itemRequestService.getRequestByRequestor(requestorId));
     }

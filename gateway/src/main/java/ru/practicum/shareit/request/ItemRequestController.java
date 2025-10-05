@@ -28,7 +28,7 @@ import ru.practicum.shareit.validation.Create;
 @Slf4j
 @Validated
 public class ItemRequestController {
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String userIdHeader = "X-Sharer-User-Id";
     private final ItemRequestClient itemRequestClient;
 
     /**
@@ -41,7 +41,7 @@ public class ItemRequestController {
      */
     @PostMapping
     public ResponseEntity<Object> addRequest(
-            @RequestHeader(USER_ID_HEADER) Long requestorId,
+            @RequestHeader(userIdHeader) Long requestorId,
             @Validated({Create.class}) @RequestBody NewItemRequestDto request) {
         log.info("Gateway: create request requestorId={}, request={}", requestorId, request);
         return itemRequestClient.add(requestorId, request);
@@ -55,7 +55,7 @@ public class ItemRequestController {
      * @return {@link ResponseEntity} со списком запросов пользователя.
      */
     @GetMapping
-    public ResponseEntity<Object> getByRequestorId(@RequestHeader(USER_ID_HEADER) Long requestorId) {
+    public ResponseEntity<Object> getByRequestorId(@RequestHeader(userIdHeader) Long requestorId) {
         log.info("Gateway: get request by requestor requestorId={}", requestorId);
         return itemRequestClient.getByRequestor(requestorId);
     }
@@ -68,7 +68,7 @@ public class ItemRequestController {
      * @return {@link ResponseEntity} со списком всех запросов.
      */
     @GetMapping("/all")
-    public ResponseEntity<Object> getRequests(@RequestHeader(USER_ID_HEADER) Long userId) {
+    public ResponseEntity<Object> getRequests(@RequestHeader(userIdHeader) Long userId) {
         log.info("Gateway: get all requests");
         return itemRequestClient.getAll(userId);
     }
