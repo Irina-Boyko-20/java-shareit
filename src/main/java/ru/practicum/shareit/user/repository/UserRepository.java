@@ -1,18 +1,19 @@
 package ru.practicum.shareit.user.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.practicum.shareit.user.model.User;
 
-import java.util.Collection;
-import java.util.Optional;
+/**
+ * Репозиторий для работы с сущностью User.
+ * Расширяет JpaRepository для CRUD операций.
+ */
+public interface UserRepository extends JpaRepository<User, Long> {
 
-public interface UserRepository {
-    User create(User user);
-
-    User update(User user);
-
-    Collection<User> findAllUsers();
-
-    Optional<User> findById(Long id);
-
-    void delete(Long id);
+    /**
+     * Проверяет, существует ли пользователь с указанной электронной почтой.
+     *
+     * @param email Электронная почта.
+     * @return true, если пользователь с таким email существует.
+     */
+    boolean existsByEmail(String email);
 }

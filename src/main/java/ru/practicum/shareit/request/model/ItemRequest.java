@@ -29,15 +29,16 @@ import java.time.LocalDateTime;
 public class ItemRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "request_id")
     Long id;
 
     @Column(name = "description", nullable = false)
     String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "requester_id", nullable = false)
+    @JoinColumn(name = "requestor_id", nullable = false)
     User requestor;
 
-    @Column(name = "created", nullable = false)
+    @Column(name = "create_date", nullable = false)
     LocalDateTime created;
 }
