@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 public class ItemControllerTest {
-    private static final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private static final String userIdHeader = "X-Sharer-User-Id";
     private MockMvc mockMvc;
 
     @Mock
@@ -57,7 +57,7 @@ public class ItemControllerTest {
                 .thenReturn(itemDto);
 
         mockMvc.perform(post("/items")
-                        .header(USER_ID_HEADER, String.valueOf(1L))
+                        .header(userIdHeader, String.valueOf(1L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newItemRequest)))
                 .andExpect(status().isCreated())
@@ -74,7 +74,7 @@ public class ItemControllerTest {
                 new ItemUpdateRequestDto("Updated Pallet jack", "5-ton pallet jack", false);
 
         mockMvc.perform(patch("/items/1")
-                        .header(USER_ID_HEADER, "1")
+                        .header(userIdHeader, "1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateItemRequest)))
                 .andExpect(status().isOk())
@@ -91,7 +91,7 @@ public class ItemControllerTest {
                 ));
 
         mockMvc.perform(get("/items/1")
-                        .header(USER_ID_HEADER, "1"))
+                        .header(userIdHeader, "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("Pallet jack"));
@@ -106,7 +106,7 @@ public class ItemControllerTest {
                 )));
 
         mockMvc.perform(get("/items")
-                        .header(USER_ID_HEADER, "1"))
+                        .header(userIdHeader, "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].name").value("Pallet jack"));
@@ -132,7 +132,7 @@ public class ItemControllerTest {
                 .thenReturn(commentDto);
 
         mockMvc.perform(post("/items/1/comment")
-                        .header(USER_ID_HEADER, "1")
+                        .header(userIdHeader, "1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCommentRequest)))
                 .andExpect(status().isCreated())

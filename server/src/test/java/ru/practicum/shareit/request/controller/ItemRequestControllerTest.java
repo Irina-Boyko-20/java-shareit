@@ -28,12 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 public class ItemRequestControllerTest {
-    private static final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private static final String userIdHeader = "X-Sharer-User-Id";
     private MockMvc mockMvc;
 
     @Mock
     private ItemRequestService itemRequestService;
-
+    
     @InjectMocks
     private ItemRequestController itemRequestController;
 
@@ -58,7 +58,7 @@ public class ItemRequestControllerTest {
                 .thenReturn(itemRequestDto);
 
         mockMvc.perform(post("/requests")
-                        .header(USER_ID_HEADER, "1")
+                        .header(userIdHeader, "1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(itemRequestWithInfoDto)))
                 .andExpect(status().isCreated())
@@ -72,7 +72,7 @@ public class ItemRequestControllerTest {
                 .thenReturn(List.of(itemRequestWithInfoDto));
 
         mockMvc.perform(get("/requests")
-                        .header(USER_ID_HEADER, "1"))
+                        .header(userIdHeader, "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].description").value("Need a pallet jack"));

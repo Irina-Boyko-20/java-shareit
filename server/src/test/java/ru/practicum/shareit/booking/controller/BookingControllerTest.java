@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 public class BookingControllerTest {
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String userIdHeader = "X-Sharer-User-Id";
     private MockMvc mockMvc;
 
     @Mock
@@ -68,7 +68,7 @@ public class BookingControllerTest {
                 .thenReturn(bookingDto);
 
         mockMvc.perform(post("/bookings")
-                        .header(USER_ID_HEADER, 1L)
+                        .header(userIdHeader, 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newBookingRequest)))
                 .andExpect(status().isCreated())
@@ -94,7 +94,7 @@ public class BookingControllerTest {
                 .thenReturn(approvedBooking);
 
         mockMvc.perform(patch("/bookings/1")
-                        .header(USER_ID_HEADER, 1L)
+                        .header(userIdHeader, 1L)
                         .param("approved", "true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("APPROVED"));
@@ -106,7 +106,7 @@ public class BookingControllerTest {
                 .thenReturn(bookingDto);
 
         mockMvc.perform(get("/bookings/1")
-                        .header(USER_ID_HEADER, 1L))
+                        .header(userIdHeader, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.item.name").value("Pallet jack"));
@@ -118,7 +118,7 @@ public class BookingControllerTest {
                 .thenReturn(List.of(bookingDto));
 
         mockMvc.perform(get("/bookings/owner")
-                        .header(USER_ID_HEADER, 1L)
+                        .header(userIdHeader, 1L)
                         .param("state", "CURRENT"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L));
@@ -130,7 +130,7 @@ public class BookingControllerTest {
                 .thenReturn(List.of(bookingDto));
 
         mockMvc.perform(get("/bookings")
-                        .header(USER_ID_HEADER, 1L)
+                        .header(userIdHeader, 1L)
                         .param("state", "ALL"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
