@@ -25,7 +25,7 @@ import ru.practicum.shareit.validation.Create;
 @Validated
 public class ItemController {
     private final String userIdHeader = "X-Sharer-User-Id";
-    private final String itemId = "/{itemId}";
+    private static final String ITEM_ID = "/{itemId}";
     private final ItemClient itemClient;
 
     /**
@@ -50,7 +50,7 @@ public class ItemController {
      * @param request объект с данными для обновления предмета
      * @return {@link ResponseEntity} с результатом обновления предмета
      */
-    @PatchMapping(itemId)
+    @PatchMapping(ITEM_ID)
     public ResponseEntity<Object> updateItem(@RequestHeader(userIdHeader) Long ownerId,
                                              @PathVariable Long itemId,
                                              @RequestBody ItemUpdateDto request) {
@@ -65,7 +65,7 @@ public class ItemController {
      * @param bookerId идентификатор пользователя, делающего запрос, передается в заголовке {@code X-Sharer-User-Id}
      * @return {@link ResponseEntity} с данными предмета
      */
-    @GetMapping(itemId)
+    @GetMapping(ITEM_ID)
     public ResponseEntity<Object> getById(@PathVariable Long itemId,
                                           @RequestHeader(userIdHeader) Long bookerId) {
         log.info("Gateway: get item itemId={}, bookerId={}", itemId, bookerId);
@@ -102,7 +102,7 @@ public class ItemController {
      * @param itemId идентификатор предмета для удаления
      * @return {@link ResponseEntity} с результатом удаления
      */
-    @DeleteMapping(itemId)
+    @DeleteMapping(ITEM_ID)
     public ResponseEntity<Object> deleteItem(@PathVariable Long itemId) {
         log.info("Gateway: delete itemId={}", itemId);
         return itemClient.delete(itemId);
@@ -116,7 +116,7 @@ public class ItemController {
      * @param comment  объект комментария, валидируется по группе {@link Create}
      * @return {@link ResponseEntity} с результатом добавления комментария
      */
-    @PostMapping(itemId + "/comment")
+    @PostMapping(ITEM_ID + "/comment")
     public ResponseEntity<Object> addComment(
             @RequestHeader(userIdHeader) Long authorId,
             @PathVariable Long itemId,

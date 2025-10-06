@@ -39,7 +39,7 @@ public class BookingController {
     /**
      * Константа, представляющая шаблон пути для параметра bookingId в URL эндпоинтов.
      */
-    private final String bookingId = "/{bookingId}";
+    private static final String BOOKING_ID = "/{bookingId}";
 
 
     /**
@@ -70,7 +70,7 @@ public class BookingController {
      * @param approved Флаг подтверждения (true - подтвердить, false - отклонить).
      * @return Ответ с обновленным бронированием и статусом 200 (OK).
      */
-    @PatchMapping(bookingId)
+    @PatchMapping(BOOKING_ID)
     public ResponseEntity<BookingResponseDto> approveBooking(@RequestHeader(userIdHeader) Long userId,
                                                              @PathVariable Long bookingId,
                                                              @RequestParam boolean approved) {
@@ -84,7 +84,7 @@ public class BookingController {
      * @param bookingId ID бронирования.
      * @return Ответ с данными бронирования и статусом 200 (OK).
      */
-    @GetMapping(bookingId)
+    @GetMapping(BOOKING_ID)
     public ResponseEntity<BookingResponseDto> getBookingByBooker(@RequestHeader(userIdHeader) Long bookerId,
                                                                  @PathVariable Long bookingId) {
         return ResponseEntity.ok(bookingService.getBookingByBooker(bookerId, bookingId));

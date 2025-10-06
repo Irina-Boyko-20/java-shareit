@@ -41,7 +41,7 @@ public class ItemController {
     /**
      * Константа, представляющая шаблон пути для параметра itemId в URL эндпоинтов.
      */
-    private final String itemId = "/{itemId}";
+    private static final String ITEM_ID = "/{itemId}";
 
     /** Сервис для работы с предметами. */
     private final ItemService itemService;
@@ -67,7 +67,7 @@ public class ItemController {
      * @param itemUpdateRequestDto DTO с данными для обновления.
      * @return ResponseEntity с обновленным предметом и статусом 200 OK.
      */
-    @PatchMapping(itemId)
+    @PatchMapping(ITEM_ID)
     public ResponseEntity<ItemResponseDto> updateItem(@RequestHeader(userIdHeader) Long ownerId,
                                                       @PathVariable Long itemId,
                                                       @RequestBody ItemUpdateRequestDto itemUpdateRequestDto) {
@@ -81,7 +81,7 @@ public class ItemController {
      * @param bookerId ID пользователя (из заголовка), для которого показываются бронирования.
      * @return ResponseEntity с подробным DTO предмета и статусом 200 OK.
      */
-    @GetMapping(itemId)
+    @GetMapping(ITEM_ID)
     public ResponseEntity<ItemDetailedResponseDto> getById(@PathVariable Long itemId,
                                                            @RequestHeader(userIdHeader) Long bookerId) {
         return ResponseEntity.ok(itemService.getById(itemId, bookerId));
@@ -114,7 +114,7 @@ public class ItemController {
      *
      * @param itemId ID предмета для удаления.
      */
-    @DeleteMapping(itemId)
+    @DeleteMapping(ITEM_ID)
     public void deleteItem(@PathVariable Long itemId) {
         itemService.delete(itemId);
     }
@@ -127,7 +127,7 @@ public class ItemController {
      * @param commentDto DTO с текстом комментария.
      * @return ResponseEntity с созданным комментарием и статусом 201 Created.
      */
-    @PostMapping(itemId + "/comment")
+    @PostMapping(ITEM_ID + "/comment")
     public ResponseEntity<CommentResponseDto> addComment(
             @RequestHeader(userIdHeader) Long authorId,
             @PathVariable Long itemId,

@@ -29,7 +29,7 @@ public class UserController {
     /**
      * Константа, представляющая шаблон пути для параметра userId в URL эндпоинтов.
      */
-    private final String userId = "/{id}";
+    private static final String USER_ID = "/{id}";
 
     /**
      * Создает нового пользователя.
@@ -49,7 +49,7 @@ public class UserController {
      * @param userUpdate DTO с данными для обновления.
      * @return DTO с обновленными данными пользователя.
      */
-    @PatchMapping(userId)
+    @PatchMapping(USER_ID)
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id,
                                                       @RequestBody UserUpdateRequestDto userUpdate) {
         return ResponseEntity.ok(userService.update(id, userUpdate));
@@ -61,7 +61,7 @@ public class UserController {
      * @param id Идентификатор пользователя.
      * @return DTO с данными пользователя.
      */
-    @GetMapping(userId)
+    @GetMapping(USER_ID)
     public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
@@ -71,7 +71,7 @@ public class UserController {
      *
      * @param id Идентификатор пользователя.
      */
-    @DeleteMapping(userId)
+    @DeleteMapping(USER_ID)
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }
