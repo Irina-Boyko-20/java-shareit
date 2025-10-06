@@ -33,6 +33,7 @@ import ru.practicum.shareit.validation.Create;
 @Validated
 public class BookingController {
     private final String userIdHeader = "X-Sharer-User-Id";
+    private final String bookingId = "/{bookingId}";
     private final BookingClient bookingClient;
 
     /**
@@ -57,7 +58,7 @@ public class BookingController {
      * @param approved  флаг утверждения бронирования: {@code true} — подтверждение, {@code false} — отклонение
      * @return ответ с результатом операции подтверждения
      */
-    @PatchMapping("/{bookingId}")
+    @PatchMapping(bookingId)
     public ResponseEntity<Object> approveBooking(@RequestHeader(userIdHeader) Long userId,
                                                  @PathVariable Long bookingId,
                                                  @RequestParam boolean approved) {
@@ -72,7 +73,7 @@ public class BookingController {
      * @param bookingId ID бронирования
      * @return ответ с информацией о бронировании
      */
-    @GetMapping("/{bookingId}")
+    @GetMapping(bookingId)
     public ResponseEntity<Object> getBookingByBooker(@RequestHeader(userIdHeader) Long bookerId,
                                                      @PathVariable Long bookingId) {
         log.info("Gateway: get booking bookingId={}, bookerId={}", bookingId, bookerId);

@@ -31,6 +31,7 @@ import ru.practicum.shareit.validation.Update;
 @Validated
 public class UserController {
     private final UserClient userClient;
+    private final String userId = "/{userId}";
 
     /**
      * Создает нового пользователя на основе предоставленных данных.
@@ -55,7 +56,7 @@ public class UserController {
      * @param request DTO с данными для обновления пользователя, валидируемый по группе {@code Update}
      * @return {@link ResponseEntity} с результатом операции (например, обновленный пользователь или ошибка)
      */
-    @PatchMapping("/{userId}")
+    @PatchMapping(userId)
     public ResponseEntity<Object> updateUser(@Validated({Update.class}) @PathVariable Long userId,
                                              @RequestBody UserUpdateRequestDto request) {
         log.info("Gateway: update userId={}, request={}", userId, request);
@@ -69,7 +70,7 @@ public class UserController {
      * @param userId идентификатор пользователя, данные которого нужно получить
      * @return {@link ResponseEntity} с данными пользователя или ошибкой, если пользователь не найден
      */
-    @GetMapping("/{userId}")
+    @GetMapping(userId)
     public ResponseEntity<Object> getById(@PathVariable Long userId) {
         log.info("Gateway: get user userId={}", userId);
         return userClient.getById(userId);
@@ -82,7 +83,7 @@ public class UserController {
      * @param userId идентификатор пользователя, которого нужно удалить
      * @return {@link ResponseEntity} с результатом операции (например, подтверждение удаления или ошибка)
      */
-    @DeleteMapping("/{userId}")
+    @DeleteMapping(userId)
     public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
         log.info("Gateway: delete userId={}", userId);
         return userClient.delete(userId);
