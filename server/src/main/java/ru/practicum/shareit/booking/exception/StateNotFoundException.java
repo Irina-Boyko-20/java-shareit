@@ -14,6 +14,6 @@ public class StateNotFoundException extends RuntimeException {
      * @param state Неизвестное состояние.
      */
     public StateNotFoundException(String state) {
-        super("Unknown state - %s ".formatted(state));
+        super("Unknown state - %s".formatted(state));
     }
 }

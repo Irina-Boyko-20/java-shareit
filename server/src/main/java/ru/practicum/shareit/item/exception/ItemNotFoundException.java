@@ -10,9 +10,9 @@ public class ItemNotFoundException extends RuntimeException {
     /**
      * Конструктор с параметром.
      *
-     * @param userId ID предмета (или пользователя, если контекст требует).
+     * @param itemId ID предмета (или пользователя, если контекст требует).
      */
-    public ItemNotFoundException(final Long userId) {
-        super("Item with id = %d not found".formatted(userId));
+    public ItemNotFoundException(final Long itemId) {
+        super("Item with id = %d not found".formatted(itemId));
     }
 }

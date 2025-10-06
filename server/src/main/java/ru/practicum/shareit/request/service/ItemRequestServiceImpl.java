@@ -101,9 +101,6 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Override
     public ItemRequestDetailsDto getRequestById(Long requestId) {
         List<ItemRequest> requests = Collections.singletonList(requestExists(requestId));
-        if (requests.isEmpty()) {
-            throw new RequestNotFoundException(requestId);
-        }
 
         return mapToItemRequestDto(requests).getFirst();
     }

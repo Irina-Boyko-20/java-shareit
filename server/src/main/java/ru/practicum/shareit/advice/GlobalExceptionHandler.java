@@ -16,6 +16,7 @@ import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.exception.InvalidBookerException;
 import ru.practicum.shareit.item.exception.InvalidOwnerException;
 import ru.practicum.shareit.item.exception.NullOrEmptyException;
+import ru.practicum.shareit.request.exception.RequestNotFoundException;
 import ru.practicum.shareit.user.exception.EmailExistsException;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 
@@ -303,6 +304,27 @@ public class GlobalExceptionHandler extends RuntimeException {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleUserNotFoundException(
             final UserNotFoundException ex
+    ) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HTTP_STATUS_NOT_FOUND);
+        body.put("errorMessages", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Обработка исключения, когда запрос не найден.
+     * <p>
+     * Перехватывает случаи, когда запрашиваемый запрос отсутствует в системе,
+     * и возвращает HTTP-статус 404 с сообщением об ошибке.
+     *
+     * @param ex исключение отсутствия запроса
+     * @return ответ с HTTP 404 и сообщением об ошибке
+     */
+    @ExceptionHandler(RequestNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleRequestNotFoundException(
+            final RequestNotFoundException ex
     ) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
